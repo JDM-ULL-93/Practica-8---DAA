@@ -151,11 +151,13 @@
     <ClCompile Include="BusquedaMD.cpp" />
     <ClCompile Include="Grafo.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SolucionMD.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BusquedaMD.h" />
     <ClInclude Include="Grafo.h" />
     <ClInclude Include="includes.h" />
+    <ClInclude Include="SolucionMD.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

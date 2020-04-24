@@ -9,11 +9,13 @@
 #include <vector>
 #include <assert.h>
 #include <set>
+#include <unordered_set>
 
 #include <chrono>
 #include <thread>
 
 /*** INTERNAL */
 #include "Grafo.h"
+#include "SolucionMD.h"
 #include "BusquedaMD.h"
 #endif // !INCLUDES_H

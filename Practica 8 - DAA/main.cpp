@@ -30,7 +30,10 @@ int main(int argc, char* argv[])
     Grafo* grafo = new Grafo(std::cin);
     std::cout << *grafo << std::endl;
     std::cout << std::endl;
-    BusquedaMD* busqueda = new BusquedaMDVoraz(grafo);
+    BusquedaMD* busqueda = new BusquedaMDVorazConstructiva(grafo);
+    busqueda->busquedaMejor();
+    delete busqueda;
+    busqueda = new BusquedaMDVorazAlternativa(grafo);
     busqueda->busquedaMejor();
     std::cout << "El programa ha finalizado y se cerrará en 5 segundos ..." << std::endl;
     std::this_thread::sleep_for(std::chrono::seconds(5));

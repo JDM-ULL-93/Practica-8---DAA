@@ -24,6 +24,9 @@
     <ClCompile Include="BusquedaMD.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="SolucionMD.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grafo.h">
@@ -33,6 +36,9 @@
       <Filter>Archivos de origen</Filter>
     </ClInclude>
     <ClInclude Include="BusquedaMD.h">
+      <Filter>Archivos de origen</Filter>
+    </ClInclude>
+    <ClInclude Include="SolucionMD.h">
       <Filter>Archivos de origen</Filter>
     </ClInclude>
   </ItemGroup>

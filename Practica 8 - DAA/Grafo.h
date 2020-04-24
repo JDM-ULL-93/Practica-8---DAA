@@ -28,12 +28,24 @@ public:
 	int coste = 0;
 
 	friend const bool operator ==(const Arista& a1, const Arista& a2) { return ((a1.idNodo1 == a2.idNodo1 && a1.idNodo2 == a2.idNodo2) || (a1.idNodo1 == a2.idNodo2 && a1.idNodo2 == a2.idNodo1)); }
-	friend const bool operator !=(const Arista& a1, const Arista& a2) { return (a1.idNodo1 != a2.idNodo1 || a1.idNodo2 != a2.idNodo2); }
-
+	friend const bool operator !=(const Arista& a1, const Arista& a2) { return !(a1==a2); }
+	friend bool operator <(const Arista& a1, const Arista& a2) { return a1.coste < a2.coste; }
+	friend bool operator >(const Arista& a1, const Arista& a2) { return a1.coste > a2.coste; }
+	//int operator ()() { return  this->coste; }
 	bool operator <(int otroCoste) { return coste < otroCoste; }
 	bool operator >(int otroCoste) { return coste > otroCoste; }
+
+};
+struct AristaComp{
+	bool operator() (const Arista& a1, const Arista& a2) const
+	{
+		return a1 == a2;
+	}
 };
 
+struct AristaHash {
+	constexpr std::size_t operator()(const Arista& a) const { return a.coste % 100; }
+};
 
 
 class Grafo {
@@ -52,6 +64,7 @@ public:
 
 		void addVecino(const int id, const Arista& arista);
 		const std::map<const int, const Arista> getAristas() const { return this->_aristas; }
+		const int getId() const { return this->_id; }
 	};
 	///
 	//////////////////////////////////////////////////////////////////////
