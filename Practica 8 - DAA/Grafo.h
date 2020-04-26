@@ -31,12 +31,11 @@ public:
 	friend const bool operator !=(const Arista& a1, const Arista& a2) { return !(a1==a2); }
 	friend bool operator <(const Arista& a1, const Arista& a2) { return a1.coste < a2.coste; }
 	friend bool operator >(const Arista& a1, const Arista& a2) { return a1.coste > a2.coste; }
-	//int operator ()() { return  this->coste; }
-	bool operator <(int otroCoste) { return coste < otroCoste; }
-	bool operator >(int otroCoste) { return coste > otroCoste; }
+	const bool operator <(int otroCoste) { return coste < otroCoste; }
+	const bool operator >(int otroCoste) { return coste > otroCoste; }
 
 };
-struct AristaComp{
+struct AristaEqual{
 	bool operator() (const Arista& a1, const Arista& a2) const
 	{
 		return a1 == a2;
@@ -44,7 +43,7 @@ struct AristaComp{
 };
 
 struct AristaHash {
-	constexpr std::size_t operator()(const Arista& a) const { return a.coste % 100; }
+	constexpr std::size_t operator()(const Arista& a) const { return a.coste % 100; } //Si hay más de 100 aristas, tendremos un problema
 };
 
 
@@ -59,17 +58,20 @@ public:
 		std::map<const int,const Arista> _aristas; // id vertice_vecino -> coste_viaje
 	public:
 		~Vertice();
+		explicit Vertice(const Vertice& other) = delete; //Constructor copia prohibido
 		explicit Vertice(const std::shared_ptr<const Grafo*>&, const int);
-		explicit Vertice(const Vertice& other) = delete; //Prohibido copias de Vertice
+		//explicit Vertice(const std::shared_ptr<const Grafo*>& , const Vertice& other); //= delete;
+
+		const int getId() const { return this->_id; }
 
 		void addVecino(const int id, const Arista& arista);
 		const std::map<const int, const Arista> getAristas() const { return this->_aristas; }
-		const int getId() const { return this->_id; }
 	};
 	///
 	//////////////////////////////////////////////////////////////////////
 protected:
 	size_t _numVertices = -1; //recordar size_t es unsigned
+	size_t _numAristas = 0;
 	std::map<const int, Vertice*> _vertices; // id_vertice -> Vertice
 
 	//Pre-Analisís
@@ -78,17 +80,21 @@ protected:
 
 public:
 	~Grafo();
-	explicit Grafo(std::istream& input, bool debug = VERBOSE);
-	explicit Grafo(const Grafo& other) = delete; //Prohibido copias de Grafo.
+	explicit Grafo(const Grafo& other) = delete; //Prohibido copia
+	explicit Grafo(std::istream& input, bool debug = VERBOSE); //Nuevo
+	//explicit Grafo(const std::map<const int, Vertice*>& vertices, const Arista& max = Arista(-1, -1, -INT_MAX), const Arista& min = Arista(-1, -1, INT_MAX)); //Apartir de otro.
+
 
 	const Arista& getMin() const { return this->_minimo; }
 	const Arista& getMax() const { return this->_maximo; }
 	const size_t& getNumVertices() const { return this->_numVertices; }
+	const size_t& getNumAristas() const { return this->_numAristas; }
 	const std::map<const int, Vertice*>& getVertices() const { return this->_vertices; }
 
 	friend std::ostream& operator <<(std::ostream& out, const Grafo& grafo);
 };
 
 
+//#pragma warning( pop )
 
 #endif

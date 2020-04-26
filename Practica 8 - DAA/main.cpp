@@ -3,40 +3,36 @@
 
 #include "includes.h"
 
-/*
-struct Test {
-    Test(const int valor) : valor(valor){}
-    Test(const Test& other) : valor(other.valor) { std::cout << "En copia" << std::endl; }
-    int valor = -1;
-};
 
-void test(Test*& a1) { //Un puntero pasado por referencia permite cambiar el propio puntero pasado desde fuera.
-    std::cout << a1 << std::endl;
-    a1->valor = 5;
-}
-
-void test2(Test& a1) { //No se llama a constructor copia
-    std::cout << a1.valor << std::endl;
-    a1.valor = 5;
-}
-*/
 
 int main(int argc, char* argv[])
 {
-    //Test* a = new Test(10);
-    //std::cout << a << std::endl;
-    //test(a);
-    //std::cout << a->valor << std::endl;
-    Grafo* grafo = new Grafo(std::cin);
+    std::ifstream input (argv[1], std::ifstream::in | std::ifstream::binary);
+    Grafo* grafo = new Grafo(input);
     std::cout << *grafo << std::endl;
     std::cout << std::endl;
-    BusquedaMD* busqueda = new BusquedaMDVorazConstructiva(grafo);
+    BusquedaMD* busqueda = nullptr;
+    busqueda = new BusquedaMDVorazConstructiva(grafo);
     busqueda->busquedaMejor();
     delete busqueda;
     busqueda = new BusquedaMDVorazAlternativa(grafo);
     busqueda->busquedaMejor();
-    std::cout << "El programa ha finalizado y se cerrará en 5 segundos ..." << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(5));
+    delete busqueda;
+    busqueda = new BusquedaMDGRASP(grafo, 0.4f);
+    busqueda->busquedaMejor();
+    delete busqueda;
+    busqueda = new BusquedaMDMultiArranque(grafo);
+    busqueda->busquedaMejor();
+    delete busqueda;
+    busqueda = new BusquedaMDVNS(grafo);
+    busqueda->busquedaMejor();
+    delete busqueda;
+    
+    system("pause");
+    
+    //std::cout << "El programa ha finalizado y se cerrará en 5 segundos ..." << std::endl;
+    //std::this_thread::sleep_for(std::chrono::seconds(5));
+    return 0;
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar

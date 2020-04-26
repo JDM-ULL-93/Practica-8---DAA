@@ -4,19 +4,14 @@
 /// SolucionMD
 SolucionMD::SolucionMD(const int& idVertice1, const int& idVertice2)
 {
-	//std::cout << "Constructor new" << std::endl;
-	//_solucion.reserve(reserve);
-	//this->addArista(arista);
 	_vertices.insert(idVertice1); 
 	_vertices.insert(idVertice2);
 }
 
 SolucionMD::SolucionMD(const SolucionMD& other)
 {
-	//std::cout << "Constructor copia" << std::endl;
-	//_solucion.reserve(other._solucion.size());
-	//_solucion.insert(_solucion.begin(),other._solucion.begin(), other._solucion.end());
 	_vertices.insert(other._vertices.begin(), other._vertices.end());
+	_score = other._score;
 }
 
 const int SolucionMD::operator[](const int& indice) const
@@ -36,6 +31,7 @@ const bool operator==(const SolucionMD& s1, const SolucionMD& s2)
 
 const bool SolucionMD::addVertice(const int& idVertice)
 {
+	_score = -INFINITY;
 	return this->_vertices.insert(idVertice).second; //true si era nuevo id en la lista
 }
 SolucionMD* operator+(const SolucionMD& s, const int& idVert)
@@ -47,6 +43,7 @@ SolucionMD* operator+(const SolucionMD& s, const int& idVert)
 
 const bool SolucionMD::removeVertice(const int& idVertice)
 {
+	_score = -INFINITY;
 	return this->_vertices.erase(idVertice); // false si se han eliminado 0 elementos
 }
 SolucionMD* operator-(const SolucionMD& s,const int& idVert)

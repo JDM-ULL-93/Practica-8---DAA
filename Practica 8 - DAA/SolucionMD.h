@@ -7,7 +7,7 @@ class SolucionMD {
 protected:
 	std::set<int> _vertices;
 	//std::vector<Arista> _solucion;
-	double _mdm = -INFINITY;
+	double _score = -INFINITY;
 public:
 	explicit SolucionMD(){} //Nuevo vacio
 	explicit SolucionMD(const int& vertice1, const int& vertice2); //Nuevo
@@ -15,13 +15,11 @@ public:
 
 	const std::set<int>& getListaVertices() const { return this->_vertices; }
 
-	//void addArista(const Arista& arista);
-	//void removeArista(const Arista& arista);
 	const bool addVertice(const int& idVertice);
 	const bool removeVertice(const int& idVertice);
 
-	const double getScore() const { return this->_mdm; }
-	void setScore(const double& mdm) { this->_mdm = mdm; }
+	const double getScore() const { return this->_score; }
+	void setScore(const double& mdm) { this->_score = mdm; }
 
 	const size_t size() const { return this->_vertices.size(); }
 	const bool isPresent(const int& idVert) const { return (this->_vertices.find(idVert) != this->_vertices.end()); }

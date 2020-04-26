@@ -19,11 +19,11 @@ Grafo::Grafo(std::istream& input, bool debug) // throw(GrafoReadingException)
 
         int id1 = 0;
         int id2 = id1 + 1;
-        int coste = 0;
         try {
             for (int id1 = 0; id1 < this->_numVertices - 1; id1++) {
                 for (int id2 = id1 + 1; id2 < this->_numVertices; id2++) {
                     if (input.eof()) throw std::out_of_range("Se ha alcanzado el final del fichero antes de lo esperado. Compruebe que el formato y el numero de aristas definidos son correctos");
+                    int coste = 0;
                     input >> coste;
                     if (_maximo < coste) {
                         _maximo.idNodo1 = id1;
@@ -35,6 +35,7 @@ Grafo::Grafo(std::istream& input, bool debug) // throw(GrafoReadingException)
                         _minimo.idNodo2 = id2;
                         _minimo.coste = coste;
                     }
+                    _numAristas++;
                     this->_vertices[id1]->addVecino(id2, Arista(id1,id2,coste));
                     this->_vertices[id2]->addVecino(id1, Arista(id2, id1, coste));
                     if (debug) std::cout << "d(" << id1 << "," << id2 << ") = d(" << id2 << "," << id1 << ") = " << coste << std::endl;
@@ -51,6 +52,21 @@ Grafo::Grafo(std::istream& input, bool debug) // throw(GrafoReadingException)
     else
         throw GrafoReadingException("Input vacio. No se ha podido cargar ningún Grafo");
 }
+
+/*Grafo::Grafo(const std::map<const int, Vertice*>& vertices, const Arista& max, const Arista& min)
+{
+    this->_numVertices = vertices.size();
+    for (const auto it_id_vertice : vertices)
+        this->_vertices.emplace(it_id_vertice.first, new Vertice(std::make_shared<const Grafo*>(this), *it_id_vertice.second));
+}*/
+
+/*Grafo::Vertice::Vertice(const std::shared_ptr<const Grafo*>& grafo,const Vertice& other)
+{
+    this->_id = other._id;
+    this->_grafo = grafo;
+    this->_aristas.insert(other._aristas.begin(), other._aristas.end());
+}*/
+
   
 Grafo::Vertice::~Vertice()
 {
@@ -62,8 +78,9 @@ Grafo::Vertice::Vertice(const std::shared_ptr<const Grafo*>& grafo, const int id
 {
     this->_grafo = grafo;
     this->_id = id;
-    this->_aristas.emplace(this->_id, Arista(id,id,0));
+    //this->_aristas.emplace(this->_id, Arista(id,id,0));
 }
+
 
 
 void Grafo::Vertice::addVecino(const int id, const Arista& arista)
