@@ -28,7 +28,6 @@ public:
 	virtual SolucionMD* primeraMejorSolucion(const Grafo* grafo)  = 0;
 	virtual SolucionMD* algoritmo(const Grafo* grafo, const SolucionMD* const S)  = 0;
 	virtual const bool  condicionParada(SolucionMD*& S,SolucionMD* Sx)  = 0;
-
 };
 
 class BusquedaMDVorazConstructiva : public BusquedaMD {
@@ -115,7 +114,7 @@ protected:
 	SolucionMD* agitarEntorno(const Grafo* grafo, const SolucionMD* const entorno);
 public:
 	~BusquedaMDVNS() { this->_entornos->clear(); delete this->_entornos; }
-	explicit BusquedaMDVNS(const Grafo* grafo, const size_t itSinMejora = 50, const size_t maxEntornosSize = UINT_MAX) :
+	explicit BusquedaMDVNS(const Grafo* grafo, const size_t itSinMejora = 50, const size_t maxEntornosSize = 20) :
 		BusquedaMD(grafo), _itSinMejora(itSinMejora), _maxEntornosSize(maxEntornosSize){}
 	explicit BusquedaMDVNS(const BusquedaMDVNS& other) = delete;
 

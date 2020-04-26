@@ -288,7 +288,9 @@ SolucionMD* BusquedaMDGRASP::algoritmo(const Grafo* grafo, const SolucionMD* con
 SolucionMD* BusquedaMDGRASP::faseConstructiva(const Grafo* grafo, SolucionMD* S)
 {
 	srand(time(0)+ grafo->getNumAristas());
-	S->addVertice(rand() % grafo->getNumVertices()); //Añadimos un vertice, de los posibles, de forma aleatoria
+	int id;
+	while (S->isPresent(id = (rand() % grafo->getNumVertices())));
+	S->addVertice(id); //Añadimos un vertice, de los posibles, de forma aleatoria
 	size_t numIter = (rand() % grafo->getNumVertices()) + 2; //Aleatorio entre [2, grafo->getNumVertices() )
 #pragma omp parallel for
 	for (int i = numIter; i < numIter; i++) {
@@ -432,18 +434,7 @@ std::vector<SolucionMD*>* BusquedaMDVNS::generarEntornos(const Grafo* grafo, con
 
 SolucionMD* BusquedaMDVNS::primeraMejorSolucion(const Grafo* grafo)
 {
-	//Nuestra primera solucion sera una formada totalmente al azar
-	srand(time(0) + grafo->getNumAristas());
-	SolucionMD* S = new SolucionMD();
-	S->addVertice(rand() % grafo->getNumVertices()); //Añadimos un vertice(de inicio) de los posibles de forma aleatoria
-	size_t numIter = rand() % (grafo->getNumVertices()-1) + 2; //Aleatorio entre [2, grafo->getNumVertices()-1 )
-#pragma omp parallel for
-	for (int i = numIter; i < numIter; i++) {
-		int id = -1;
-		while (S->isPresent(id = rand() % grafo->getNumVertices()));//Seleccionamos un vertice al azar que no este ya presente.
-		S->addVertice(id); // Y se lo añadimos a nuestra solución actual.
-	}
-
+	SolucionMD* S = this->generarSolucionAleatoria(grafo);
 	this->_entornos = generarEntornos(grafo, S);
 
 	return S;
