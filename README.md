@@ -8,10 +8,10 @@ El problema de la maxima dispersion media es un problema que parte de los siguie
 -- **V** = Conjunto de vertices de longitud **|V|**.
 -- **E** = Conjunto de aristas que interconectan los vertices/nodos anteriores.
 * Una **función objetivo** , **f(S)**, por la cual se evalua la optimalidad de la solución encontrada tal que:
-![formula.png](https://bit.ly/2xZFI4N)
+![formula.png](./img/formula.png)
 -- Donde **S** = Conjunto de vertices que representan una solución al problema *Max-mean dispersion*.
 -- **|S|** = Longitud del conjunto.
--- ![sumatorio.png](https://bit.ly/2KBFbZG) = Sumatorio de los costes (representado por la función d(i,j) ) de todas aquellas aristas que interconectan los vertices/nodos seleccionados y almacenados en la solucion **S**.
+-- ![sumatorio.png](./img/sumatorio.png) = Sumatorio de los costes (representado por la función d(i,j) ) de todas aquellas aristas que interconectan los vertices/nodos seleccionados y almacenados en la solucion **S**.
 
 Para la busqueda de una solución optima al problema al problema expuesto anteriormente, se diseña e implementan 4 algoritmos de busqueda distintos:
 * Una busqueda ***voraz constructiva***
