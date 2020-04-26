@@ -9,7 +9,9 @@ El problema de la maxima dispersion media es un problema que parte de los siguie
 -- **E** = Conjunto de aristas que interconectan los vertices/nodos anteriores.
 * Una **función objetivo** , **f(S)**, por la cual se evalua la optimalidad de la solución encontrada tal que:
 
+
 ![formula.png](./img/formula.png)
+
 
 -- Donde **S** = Conjunto de vertices que representan una solución al problema *Max-mean dispersion*.
 -- **|S|** = Longitud del conjunto.
