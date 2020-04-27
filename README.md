@@ -1,4 +1,9 @@
 
+**Autor**: alu0101160337
+**Github** : https://github.com/JDM-ULL-93
+**Repositorio** : https://github.com/JDM-ULL-93/Practica-8---DAA
+
+***
 # Practica 8 - DAA  . Max-mean dispersion problem
 
 ## Introducción
@@ -408,6 +413,24 @@ Nuevamente, algoritmo dividido en 3 fases:
 
 ***
 # Análisis
+
+## Especificaciones maquina
+
+### CPU
+* Nombre : Intel Core i7-6700k
+* Frecuencia (base-turbo) : 4 Ghz - 4.2 GHz
+* Nucleos: 4
+* Hilos: 8
+* Arquitectura: Skylake (64 bits)
+* Caché L1 : 64KB (por núcleo)
+* Caché L2: 256 KB(por nucleo)
+* Caché L3: 8192 KB
+* Interfax de memoria: DDR4-1866/2133, DDR3L-1333/1600
+
+### Memoria
+* Capacidad: 16 GB
+* Anchura : 128 bits 
+* Frecuencia:  2400 MHz
 
 ## Algoritmo Voraz
 
