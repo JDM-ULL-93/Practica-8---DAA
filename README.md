@@ -4,35 +4,35 @@
 **Repositorio** : https://github.com/JDM-ULL-93/Practica-8---DAA
 
 ***
-# Practica 8 - DAA  . Max-mean dispersion problem
+# Practica 8 - DAA  . Max-mean dispersión problem
 
 ## Introducción
 
-El problema de la maxima dispersion media es un problema que parte de los siguientes elementos:
+El problema de la máxima dispersión media es un problema que parte de los siguientes elementos:
 * Un grafo **G = (V,E)** donde:
--- **V** = Conjunto de vertices de longitud **|V|**.
--- **E** = Conjunto de aristas que interconectan los vertices/nodos anteriores.
-* Una **función objetivo** , **f(S)**, por la cual se evalua la optimalidad de la solución encontrada tal que:
+-- **V** = Conjunto de vértices de longitud **|V|**.
+-- **E** = Conjunto de aristas que interconectan los vértices/nodos anteriores.
+* Una **función objetivo** , **f(S)**, por la cual se evalúa la optimalidad de la solución encontrada tal que:
 ![formula.png](./img/formula.png)
 
--- Donde **S** = Conjunto de vertices que representan una solución al problema *Max-mean dispersion*.
+-- Donde **S** = Conjunto de vértices que representan una solución al problema *Max-mean dispersión*.
 
 -- **|S|** = Longitud del conjunto.
 
 -- ![sumatorio.png](./img/sumatorio.png) = Sumatorio de los costes (representado por la función d(i,j) ) de todas aquellas aristas que interconectan los vertices/nodos seleccionados y almacenados en la solucion **S**.
 
-Para la busqueda de una solución optima al problema al problema expuesto anteriormente, se diseña e implementan 4 algoritmos de busqueda distintos:
-* Una busqueda ***voraz constructiva***
-* Una busqueda ***voraz destructiva***
-* Una busqueda ***GRASP*** *(Greedy Randomized Adaptive Search Procedure)*
-* Una busqueda ***MultiArranque***
-* Una busqueda ***VNS*** *(Variable Neighborhood Search )*
+Para la búsqueda de una solución óptima al problema al problema expuesto anteriormente, se diseña e implementan 4 algoritmos de búsqueda distintos:
+* Una búsqueda ***voraz constructiva***
+* Una búsqueda ***voraz destructiva***
+* Una búsqueda ***GRASP*** *(Greedy Randomized Adaptive Search Procedure)*
+* Una búsqueda ***MultiArranque***
+* Una búsqueda ***VNS*** *(Variable Neighborhood Search )*
 
-El fundamento de estos algoritmos y su implementación en el codigo se explicarán más adelante.
+El fundamento de estos algoritmos y su implementación en el código se explicarán más adelante.
 ***
 ## Lectura del Grafo
 
-Antes de empezar con la busqueda de una solución al problema hay que cargar los datos del grafo a la memoría de nuestro programa. Previo a explicación de como se carga, el formato estandar elegido para representar nuestro grafo en un fichero de texto plano es el que se presenta en el siguiente ejemplo (los comentarios  al lado no deben estar y son solo a modo explicativo):
+Antes de empezar con la búsqueda de una solución al problema hay que cargar los datos del grafo a la memoria de nuestro programa. Previo a explicación de cómo se carga, el formato estándar elegido para representar nuestro grafo en un fichero de texto plano es el que se presenta en el siguiente ejemplo (los comentarios  al lado no deben estar y son solo a modo explicativo):
 ```
 4 //Número de vértices
 -4 //d(1, 2) = d(2, 1)
@@ -55,15 +55,15 @@ public:
 ...
 };
 ```
-Por simplificar el codigo, se han eliminado aquellas partes que no son intereses de explicar ahora, pero si más adelante.
+Por simplificar el código, se han eliminado aquellas partes que no son intereses de explicar ahora, pero si más adelante.
 
-Antes de empezar, es importante hacer notar que, como estamos progamando en C++, y para evitar el mayor número de problemas en la gestión de objetos y punteros en este lenguaje, todos los constructores han de ser explicitos, de forma que no se ejecute nada de forma implicita (y, por lo tanto, no prevista por nosotros). Los constructores copias, por lo general, excepto cuando de verdad sean imprescindibles , son borrados. Esta filosofía de trabajo de clases se seguirá viendo en el resto del codigo de nuestro programa. Ante la incertumbre de si vamos a tener que refactorizar creando una clase hija, los metodos o propiedades de la clase privados no existen.
+Antes de empezar, es importante hacer notar que, como estamos programando en C++, y para evitar el mayor número de problemas en la gestión de objetos y punteros en este lenguaje, todos los constructores han de ser explícitos, de forma que no se ejecute nada de forma implícita (y, por lo tanto, no prevista por nosotros). Los constructores copias, por lo general, excepto cuando de verdad sean imprescindibles , son borrados. Esta filosofía de trabajo de clases se seguirá viendo en el resto del código de nuestro programa. Ante la incertidumbre de si vamos a tener que refactorizar creando una clase hija, los métodos o propiedades de la clase privados no existen.
 
 Volviendo a la explicación, nuestro **Grafo** solo se carga desde el constructor y este recibe 2 argumentos:
-1) Una instancia *std::istream&*, esto es, una tuberia de entrada por el cual nuestro programa pueda leer del fichero. Esta tubería, en nuestro codigo, se crea creando una instancia *std::ifstream* con los siguientes argumentos:
+1) Una instancia *std::istream&*, esto es, una tubería de entrada por el cual nuestro programa pueda leer del fichero. Esta tubería, en nuestro código, se crea creando una instancia *std::ifstream* con los siguientes argumentos:
 
 ```cpp
-//argv[1] debe contener la ruta a 1 fichero valido.
+//argv[1] debe contener la ruta a 1 fichero válido.
  std::ifstream input (argv[1], std::ifstream::in | std::ifstream::binary);
 ```
 Y dado que *std::ifstream* hereda de *std::istream* podemos pasarlo a nuestra clase **Grafo** directamente:
@@ -72,7 +72,7 @@ Y dado que *std::ifstream* hereda de *std::istream* podemos pasarlo a nuestra cl
  Grafo* grafo = new Grafo(input);
 ```
 
-Una vez tenemos abierto nuestro fichero con el formato presentado anteriormente, al leer la primera fila, que se corresponde con el número de vertices, seteamos la propiedad que guarda el nº de vertices en nuestro grado:
+Una vez tenemos abierto nuestro fichero con el formato presentado anteriormente, al leer la primera fila, que se corresponde con el número de vértices, seteamos la propiedad que guarda el nº de vértices en nuestro grado:
 
 ```cpp
 class Grafo {
@@ -82,7 +82,7 @@ protected:
 ...
 };
 ```
-E inicializamos y guardamos todos los vertices con los que trabajaremos justo después en la siguiente propiedad de nuestra clase:
+E inicializamos y guardamos todos los vértices con los que trabajaremos justo después en la siguiente propiedad de nuestra clase:
 ```cpp
 class Grafo {
 ...
@@ -91,9 +91,9 @@ protected:
 ...
 };
 ```
-Despues de leer la primera fila, se sigue leyendo y cargando las estructuras de datos explicadas justo adelante, así hasta que se alcanza el final de linea del fichero.
+Después de leer la primera fila, se sigue leyendo y creando las estructuras de datos explicadas justo delante, así hasta que se alcanza el final de línea del fichero.
 
-Para trabajar con los vertices, en nuestro programa trabajos con la clase **Vertice** : (contenido dentro de la clase Grafo a causa de la relación de dependencia entre ambas)
+Para trabajar con los vértices, en nuestro programa trabajos con la clase **Vertice** : (contenido dentro de la clase Grafo a causa de la relación de dependencia entre ambas)
 
 ```cpp
 class Vertice {
@@ -114,12 +114,12 @@ class Vertice {
 	};
 ```
 
-La clase es bastante autoexplicativa. El grafo tiene un conjunto de vertices y cada vertice tiene un conjunto de aristas que le conectan con otros vertices. Por supuesto, en nuestro programa tambien trabajamos con una clase **Arista**:
+La clase es bastante autoexplicativa. El grafo tiene un conjunto de vértices y cada vértice tiene un conjunto de aristas que le conectan con otros vértices. Por supuesto, en nuestro programa también trabajamos con una clase **Arista**:
 
 ```cpp
 class Arista {
 public:
-	explicit Arista();//Invalido
+	explicit Arista();//Inválido
 	explicit Arista(int idNodo1, int idNodo2, int coste);//Nuevo
 	explicit Arista(const Arista& other);//Copia
 	int idNodo1 = -1;
@@ -134,14 +134,14 @@ public:
 	const bool operator >(int otroCoste) { return coste > otroCoste; }
 };
 ```
-La filosofía de esta clase es que sea como mi dato basico (al nivel de int, double, float, ...) y por ello que la marque como un *Struct* y no tenga ni un solo metodo pero si muchas sobrecargas de operadores.
+La filosofía de esta clase es que sea como mi dato basico (al nivel de int, double, float, ...) y por ello que la marque como un *Struct* y no tenga ni un solo método pero sí muchas sobrecargas de operadores.
 
-Una vez hemos explicado como funciona la carga de un Grafo y las estructuras de datos que usamos para guardar esos datos, procedemos a explicar los algoritmos de busqueda que iteran sobre ello en busca del valor maximo de la dispersión medía.
+Una vez hemos explicado cómo funciona la carga de un Grafo y las estructuras de datos que usamos para guardar esos datos, procedemos a explicar los algoritmos de búsqueda que iteran sobre ello en busca del valor máximo de la dispersión media.
 
 ***
-## Busqueda solucion optima 
+## Busqueda solución óptima 
 
-Los algoritmos que enúmeramos anteriormente, todos ellos, heredan de una clase base abstracta **BusquedaMD**, con la siguiente estructura:
+Los algoritmos que enumeramos anteriormente, todos ellos, heredan de una clase base abstracta **BusquedaMD**, con la siguiente estructura:
 
 ```cpp
 class BusquedaMD {
@@ -165,9 +165,9 @@ public:
 };
 ```
 
-Esta clase abstracta, solo implementa 2 metodos:
+Esta clase abstracta, sólo implementa 2 métodos:
 
-1) La primera, **busquedaMejor** que es desde la cual se va a llamar al resto de metodos (que las hijas deberan implementar)
+1) La primera, **busquedaMejor** que es desde la cual se va a llamar al resto de métodos (que las hijas deben implementar)
 2) La segunda, **funcionObjetivo**, que guarda la función objetivo explicado en la introducción.
 
 **busquedaMejor**:
@@ -214,7 +214,7 @@ double BusquedaMD::funcionObjetivo(const Grafo* grafo , const SolucionMD* const 
 ```
 
 De lo mostrado anteriormente, cabe destacar 2 cosas:
-1) Los **"#pragma omp"** son directivas de la libreria OpenMP para programación paralela (el uso de esta librería debe notificarse al compilador pasandole la opción *"/openmp"*). De forma que el for marcado con *"#pragma omp parallel for"* sirve para notificar que el for justo delante puede y debe ejecutarse en multiples hilos de ejecución y *"#pragma omp critical"* sirve para notificar que lo que sigue es una zona critica y que el hilo que entre dentro bloqueará al resto.
+1) Los **"#pragma omp"** son directivas de la libreria OpenMP para programación paralela (el uso de esta librería debe notificarse al compilador pasándole la opción *"/openmp"*). De forma que el for marcado con *"#pragma omp parallel for"* sirve para notificar que el for justo delante puede y debe ejecutarse en múltiples hilos de ejecución y *"#pragma omp critical"* sirve para notificar que lo que sigue es una zona crítica y que el hilo que entre dentro bloqueará al resto.
 2) Más importante, la clase que se retorna en *"busquedaMejor"* , **SolucionMD** , es la estructura planteada para guardar las soluciones a nuestro problema:
 
 ```cpp
@@ -246,12 +246,12 @@ public:
 };
 ```
 
-*"_vertices"* guarda los id de los vertices de nuestra solucion
+*"_vertices"* guarda los id de los vértices de nuestra solución
 *"_score"* guarda el resultado de la funcionObjetivo de nuestra solución.
-El operador [] devuelve el id del nodo en indice i de la lista *"_vertices"*
-El operador + **crea una copia** de la solucion actual y le añade (con *"addVertice"*) el id pasado como argumento(**devolviendo error si ya existía**)
+El operador [] devuelve el id del nodo en índice i de la lista *"_vertices"*
+El operador + **crea una copia** de la solución actual y le añade (con *"addVertice"*) el id pasado como argumento(**devolviendo error si ya existía**)
 El operador - , por lo tanto, hace lo contrario, **crea una copia** de la solución actual y le elimina el id(con *"removeVertice"*) pasado como argumento (**devolviendo error si no existía previamente**)
-Los operadores son útiles para reducir la longitud de nuestro codigo. El resto de metodos, el propio nombre del metodo es autoexplicativo.
+Los operadores son útiles para reducir la longitud de nuestro código. El resto de métodos, el propio nombre del método es autoexplicativo.
 
 Ya hemos definido la mayoría de las estructuras que se usarán en los algoritmos , ahora vamos a explicar la propia implementación de los algoritmos:
 
@@ -273,13 +273,13 @@ public:
 
 Es importante recordar la estructura y secuencia de llamadas de **"busquedaMejor"** explicada anteriormente porque el resto de clases:
 
-Antes de entrar en el bucle (a modo de preProcesamiento) se llama a **"primeraMejorSolucion"** . Despues,dentro del bucle (a modo de procesamiento) se llama a **"algoritmo"** y , para comprobación de la condición de parada del bucle (tambien a modo de postProcesamiento) se llama finalmente a **"condicionParada"** .
+Antes de entrar en el bucle (a modo de preProcesamiento) se llama a **"primeraMejorSolucion"** . Después,dentro del bucle (a modo de procesamiento) se llama a **"algoritmo"** y , para comprobación de la condición de parada del bucle (también a modo de postProcesamiento) se llama finalmente a **"condicionParada"** .
 
 Volviendo a la explicación de nuestro algoritmo, las 3 fases anteriores se pueden resumen:
 
 1) **primeraMejorSolucion** : Devuelve como primer solución aquella que se consigue de buscar la arista(y por lo tanto,los 2 nodos que se conectan con ella) con mayor coste de nuestro Grafo "grafo".
-2) **algoritmo** : Ejecuta el propio algoritmo greedy, por el cual, desde la solución inicial conseguida anteriormente, se va iterando por los nodos vecinos de los nodos en la solucion, añadiendoselos a la solucion actual para comprobar si mejora la solucion. Si no la mejora, se descarta y se busca el siguiente vecino. Si la mejora, se marca como solución posible. En ambos casos ,se itera por todos los nodos vecinos con la esperanza de encontrar una que lo mejore. Por lo tanto, al final, pueden pasar 2 cosas:
-2.1 No se encuentra ningún nodo que mejore la solución actual, la solucion inicial es optima y se devuelve
+2) **algoritmo** : Ejecuta el propio algoritmo greedy, por el cual, desde la solución inicial conseguida anteriormente, se va iterando por los nodos vecinos de los nodos en la solución, añadiendoles a la solución actual para comprobar si mejora la solución. Si no la mejora, se descarta y se busca el siguiente vecino. Si la mejora, se marca como solución posible. En ambos casos ,se itera por todos los nodos vecinos con la esperanza de encontrar una que lo mejore. Por lo tanto, al final, pueden pasar 2 cosas:
+2.1 No se encuentra ningún nodo que mejore la solución actual, la solución inicial es óptima y se devuelve
 2.2 Se encuentra un nodo que mejore la solución actual, la solución inicial es sustituida por la mejor y se devuelve.
 3) **condicionParada** : Si la solución devuelta anteriormente en la iteración es distinto a la solución inicial, el bucle continua. Sino, si la fase previa no logró mejorar la solución, se detiene el bucle.
 
@@ -326,12 +326,12 @@ public:
 };
 ```
 
-En el constructor de la busqueda GRASP, se reciben 2 argumentos adicionales , *"delta"* que se refiere a **que porcentaje del tamaño original de nodos** tendrá la **LRC** (**L**ista **R**estringda de **C**andidatos) y *"itSinMejora"* que hace referencia a lo que el propio nombre indica, el número de iteraciones sin detectar una mejora (por defecto a 500) para que la condición de parada se evalue a true y se salga del bucle. Ahora, describiremos que hacemos en cada fase:
+En el constructor de la búsqueda GRASP, se recibe 2 argumentos adicionales , *"delta"* que se refiere a **qué porcentaje del tamaño original de nodos** tendrá la **LRC** (**L**ista **R**restringida de **C**candidatos) y *"itSinMejora"* que hace referencia a lo que el propio nombre indica, el número de iteraciones sin detectar una mejora (por defecto a 500) para que la condición de parada se evalúe a true y se salga del bucle. Ahora, describiremos qué hacemos en cada fase:
 
 1) **primeraMejorSolucion** : Sería el hueco para un preprocesamiento, por ejemplo, descartar aquellos nodos con todas las aristas negativas, pero por culpa de una filosofía inicial con la estructura de nuestros datos, la clase "Grafo" que no admite ningún cambio ni copia, no fué posible
 2) **algoritmo** : Dentro de esta fase hay 2 subfases:
-2.1 **faseConstructiva** : Dentro de esta fase, apartir de una solución inicial previa (que si es la primera vez será vacia) se empieza añadiendole un vertice aleatoria no presente ya en la solución. Con esa nueva solucion se forma una LRC de tamaño *(numVertices * delta)* que contendra, ordenado de mayor a menor afinidad, esto es, de mayor a menor incremento en la función objetivo, los ids no presentes en la solucion. De esta LRC se selecciona uno al azar y se le añade a la solución.
-2.2 Esta solución luego se pasa a otra clase encargada de las busquedas por entorno local, la clase **BusquedaEntornoLocal** :
+2.1 **faseConstructiva** : Dentro de esta fase, a partir de una solución inicial previa (que si es la primera vez será vacía) se empieza añadiendo un vértice aleatoria no presente ya en la solución. Con esa nueva solución se forma una LRC de tamaño *(numVertices * delta)* que contendrá, ordenado de mayor a menor afinidad, esto es, de mayor a menor incremento en la función objetivo, los ids no presentes en la solución. De esta LRC se selecciona uno al azar y se le añade a la solución.
+2.2 Esta solución luego se pasa a otra clase encargada de las búsquedas por entorno local, la clase **BusquedaEntornoLocal** :
 
 ```cpp
 class BusquedaEntornoLocal {
@@ -347,8 +347,8 @@ public:
 };
 ```
 
-La clase es bastante sencilla y adhoc para refactorizar codigo. Basicamente lo que hace **BusquedaEntornoLocal** son 2 *movimientos*:
-1) Primer movimiento, apartir de una solución inicial, remueve el vertice de la solución con menor afinidad, aquella que produce mejor perdida de función objetivo sacarla
+La clase es bastante sencilla y adhoc para refactorizar codigo. Básicamente lo que hace **BusquedaEntornoLocal** son 2 *movimientos*:
+1) Primer movimiento, a partir de una solución inicial, remueve el vértice de la solución con menor afinidad, aquella que produce menor pérdida de función objetivo sacarla
 2) Segundo movimiento, insertar otro nodo no presente en la solución inicial que mejore la solución inicial.
 Estos 2 movimientos se repiten en bucle hasta que en el 2º movimiento no se logra encontrar una solución mejor.
 
@@ -375,12 +375,12 @@ public:
 Este algoritmo es mucho más sencillo que los anteriores, en cada fase se realiza lo siguiente:
 
 1) **primeraMejorSolucion** : Se crea una solución enteramente aleatorio (tanto el tamaño y los nodos elegidos) y se devuelve
-2) **algoritmo**: A esa solucion aleatoria se le pasa a **BusquedaEntornoLocal** para que la mejore mediante una busqueda local (explicada anteriormente, una busqueda que analiza las soluciones posibles inmediatamente vecinas).
+2) **algoritmo**: A esa solución aleatoria se le pasa a **BusquedaEntornoLocal** para que la mejore mediante una búsqueda local (explicada anteriormente, una búsqueda que analiza las soluciones posibles inmediatamente vecinas).
 3) **condicionParada** : La condición de parada es que exista unas 500 iteraciones sin una sola mejora.
 
 ## Algoritmo VNS
 
-Terminamos la documentación explicando en que consiste el algoritmo **VNS** (**V**ariable **N**eighborhood **S**earch ). Este algoritmo se implementa en la clase **BusquedaMDVNS**
+Terminamos la documentación explicando en qué consiste el algoritmo **VNS** (**V**ariable **N**eighborhood **S**earch ). Este algoritmo se implementa en la clase **BusquedaMDVNS**
 
 ```cpp
 class BusquedaMDVNS : public BusquedaMD {
@@ -404,28 +404,28 @@ public:
 };
 ```
 
-Esta clase recibe en el constructor, nuevamente, 2 argumentos adicionales, *'itSinMejora'* o el número de repeticiones de **algoritmo** sin devolver una mejora que va a realizar antes de detener el algoritmo y *'maxEntornosSize'* que setea (por defecto 20) el tamaño maxima de la lista (*_entornos*) que va a guardar todos esos entornos
+Esta clase recibe en el constructor, nuevamente, 2 argumentos adicionales, *'itSinMejora'* o el número de repeticiones de **algoritmo** sin devolver una mejora que va a realizar antes de detener el algoritmo y *'maxEntornosSize'* que setea (por defecto 20) el tamaño máxima de la lista (*_entornos*) que va a guardar todos esos entornos
 Nuevamente, algoritmo dividido en 3 fases:
-1) **primeraMejorSolucion** : Se genera una solución totalmente aleatoria (como en MultiArranque) y con esa solución, se generan todos los entornos posibles con centro cada uno de los nodos presentes en la solucion (todos los que quepan en una lista de *maxEntornosSize*).
-2) **algoritmo** : En esta fase, se inicia otro bucle donde se itera por cada uno de los entornos generados previamente que esten dentro de la lista *_entornos*, por cada entorno, se le hace un *"agitado"*, que consiste, brevemente, en "agitar" el entorno para sacar un vertice y meter otro no presente, de forma que el entorno se desplaza de forma aleatoría, permitiendonos hacer saltos y poder escapar de algún optimo local (problema que se sucede en todos los algoritmos previos). De este nuevo entorno se obtiene una solucion y esta es pasada a **BusquedaEntornoLocal** para hacer una busqueda local dentro del entorno de la solución y devolver la mejor solución local encontrada si existiese.
+1) **primeraMejorSolucion** : Se genera una solución totalmente aleatoria (como en MultiArranque) y con esa solución, se generan todos los entornos posibles con centro cada uno de los nodos presentes en la solución (todos los que quepan en una lista de *maxEntornosSize*).
+2) **algoritmo** : En esta fase, se inicia otro bucle donde se itera por cada uno de los entornos generados previamente que estén dentro de la lista *_entornos*, por cada entorno, se le hace un *"agitado"*, que consiste, brevemente, en "agitar" el entorno para sacar un vértice y meter otro no presente, de forma que el entorno se desplaza de forma aleatoria, permitiéndonos hacer saltos y poder escapar de algún óptimo local (problema que se sucede en todos los algoritmos previos). De este nuevo entorno se obtiene una solución y esta es pasada a **BusquedaEntornoLocal** para hacer una búsqueda local dentro del entorno de la solución y devolver la mejor solución local encontrada si existiese.
 3) Como en las anteriores (excepto en las Greedy), el criterio de parada es que se produzca número de iteraciones sin mejora = *itSinMejora*.
 
 
 ***
 # Análisis
 
-## Especificaciones maquina
+## Especificaciones máquina
 
 ### CPU
 * Nombre : Intel Core i7-6700k
 * Frecuencia (base-turbo) : 4 Ghz - 4.2 GHz
-* Nucleos: 4
+* Núcleos: 4
 * Hilos: 8
 * Arquitectura: Skylake (64 bits)
-* Caché L1 : 64KB (por núcleo)
-* Caché L2: 256 KB(por nucleo)
+* Caché L1 : 64 KB (por núcleo)
+* Caché L2: 256 KB(por núcleo)
 * Caché L3: 8192 KB
-* Interfax de memoria: DDR4-1866/2133, DDR3L-1333/1600
+* Interfaz de memoria: DDR4-1866/2133, DDR3L-1333/1600
 
 ### Memoria
 * Capacidad: 16 GB
@@ -531,3 +531,4 @@ Nuevamente, algoritmo dividido en 3 fases:
 | max-mean-div-20.txt | 20 |   15   |     3     | 13.1667 | 1256.86 ms |
 | max-mean-div-20.txt | 20 |   20   |     4     | 13.1667 | 1980.76 ms |
 | max-mean-div-20.txt | 20 |   25   |     5     | 13.1667 | 1379.01 ms |
+
