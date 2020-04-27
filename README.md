@@ -406,6 +406,105 @@ Nuevamente, algoritmo dividido en 3 fases:
 3) Como en las anteriores (excepto en las Greedy), el criterio de parada es que se produzca número de iteraciones sin mejora = *itSinMejora*.
 
 
+***
+# Análisis
 
+## Algoritmo Voraz
 
+|       Problema      |  N | Ejecución |    md   |     CPU    |
+|:-------------------:|:--:|:---------:|:-------:|:----------:|
+| max-mean-div-10.txt | 10 |     1     | 10.1429 |  6.1665 ms |
+| max-mean-div-10.txt | 10 |     2     | 10.1429 |  4.984 ms  |
+| max-mean-div-10.txt | 10 |     3     | 10.1429 |  3.1842 ms |
+| max-mean-div-10.txt | 10 |     4     | 10.1429 |  4.0077 ms |
+| max-mean-div-10.txt | 10 |     5     | 10.1429 |  3.2423 ms |
+| max-mean-div-15.txt | 15 |     1     |   9.5   |  2.6585 ms |
+| max-mean-div-15.txt | 15 |     2     |   9.5   |  2.9053 ms |
+| max-mean-div-15.txt | 15 |     3     |   9.5   |  2.8281 ms |
+| max-mean-div-15.txt | 15 |     4     |   9.5   |  3.4658 ms |
+| max-mean-div-15.txt | 15 |     5     |   9.5   |  2.9696 ms |
+| max-mean-div-20.txt | 20 |     1     | 12.8571 | 13.8072 ms |
+| max-mean-div-20.txt | 20 |     2     | 12.8571 | 17.7031 ms |
+| max-mean-div-20.txt | 20 |     3     | 12.8571 | 16.5597 ms |
+| max-mean-div-20.txt | 20 |     4     | 12.8571 | 16.5597 ms |
+| max-mean-div-20.txt | 20 |     5     | 12.8571 | 14.7064 ms |
 
+## Algoritmo Voraz Alternativo
+
+|       Problema      |  N | Ejecución |    md   |     CPU    |
+|:-------------------:|:--:|:---------:|:-------:|:----------:|
+| max-mean-div-10.txt | 10 |     1     |    14   | 10.6744 ms |
+| max-mean-div-10.txt | 10 |     2     |    14   | 10.0406 ms |
+| max-mean-div-10.txt | 10 |     3     |    14   | 10.9923 ms |
+| max-mean-div-10.txt | 10 |     4     |    14   | 11.2049 ms |
+| max-mean-div-10.txt | 10 |     5     |    14   | 12.1292 ms |
+| max-mean-div-15.txt | 15 |     1     | 9.83333 | 112.69 ms  |
+| max-mean-div-15.txt | 15 |     2     | 9.83333 | 92.1789 ms |
+| max-mean-div-15.txt | 15 |     3     | 9.83333 | 95.9177 ms |
+| max-mean-div-15.txt | 15 |     4     | 9.83333 | 93.5733 ms |
+| max-mean-div-15.txt | 15 |     5     | 9.83333 | 92.3261 ms |
+| max-mean-div-20.txt | 20 |     1     | 12.8571 | 456.408 ms |
+| max-mean-div-20.txt | 20 |     2     | 12.8571 | 452.744 ms |
+| max-mean-div-20.txt | 20 |     3     | 12.8571 | 464.504 ms |
+| max-mean-div-20.txt | 20 |     4     | 12.8571 | 451.607 ms |
+| max-mean-div-20.txt | 20 |     5     | 12.8571 | 459.484 ms |
+
+## Algoritmo GRASP
+
+|       Problema      |  N | |LRC| | Ejecución |    md   |     CPU    |
+|:-------------------:|:--:|:-----:|:---------:|:-------:|:----------:|
+| max-mean-div-10.txt | 10 |   2   |     1     | 11.7143 | 118.654 ms |
+| max-mean-div-10.txt | 10 |   4   |     2     |   12.8  | 138.885 ms |
+| max-mean-div-10.txt | 10 |   6   |     3     |   12.8  | 110.685 ms |
+| max-mean-div-10.txt | 10 |   8   |     4     |   12.8  | 104.504 ms |
+| max-mean-div-10.txt | 10 |   10  |     5     |   12.8  | 121.029 ms |
+| max-mean-div-15.txt | 15 |   3   |     1     |   9.5   | 164.413 ms |
+| max-mean-div-15.txt | 15 |   6   |     2     |   9.5   | 160.036 ms |
+| max-mean-div-15.txt | 15 |   9   |     3     |   9.5   | 154.824 ms |
+| max-mean-div-15.txt | 15 |   12  |     4     |   9.75  | 281.264 ms |
+| max-mean-div-15.txt | 15 |   15  |     5     | 9.33333 | 152.61 ms  |
+| max-mean-div-20.txt | 20 |   4   |     1     | 12.8571 | 253.001 ms |
+| max-mean-div-20.txt | 20 |   8   |     2     |    5    | 205.059 ms |
+| max-mean-div-20.txt | 20 |   12  |     3     | 12.8571 | 244.123 ms |
+| max-mean-div-20.txt | 20 |   16  |     4     | 12.8571 | 219.043 ms |
+| max-mean-div-20.txt | 20 |   20  |     5     | 12.8571 | 295.155 ms |
+
+## Algoritmo MultiArranque
+
+|       Problema      |  N | Ejecución |    md   |     CPU    |
+|:-------------------:|:--:|:---------:|:-------:|:----------:|
+| max-mean-div-10.txt | 10 |     1     |   12.8  | 87.2331 ms |
+| max-mean-div-10.txt | 10 |     2     |   12.8  | 79.8559 ms |
+| max-mean-div-10.txt | 10 |     3     |   12.8  | 101.708 ms |
+| max-mean-div-10.txt | 10 |     4     |   12.8  |  105.76 ms |
+| max-mean-div-10.txt | 10 |     5     |   12.8  | 159.646 ms |
+| max-mean-div-15.txt | 15 |     1     |    7    | 176.762 ms |
+| max-mean-div-15.txt | 15 |     2     |    7    |  145.13 ms |
+| max-mean-div-15.txt | 15 |     3     |    7    | 182.526 ms |
+| max-mean-div-15.txt | 15 |     4     |    5    | 141.299 ms |
+| max-mean-div-15.txt | 15 |     5     |   9.5   |  528.75 ms |
+| max-mean-div-20.txt | 20 |     1     |  10.75  | 754.504 ms |
+| max-mean-div-20.txt | 20 |     2     |    5    | 202.781 ms |
+| max-mean-div-20.txt | 20 |     3     |    5    | 200.683 ms |
+| max-mean-div-20.txt | 20 |     4     |  10.75  |  232.49 ms |
+| max-mean-div-20.txt | 20 |     5     | 12.8571 | 353.553 ms |
+
+## Algoritmo VNS
+
+|       Problema      |  N | K(max) | Ejecución |    md   |     CPU    |
+|:-------------------:|:--:|:------:|:---------:|:-------:|:----------:|
+| max-mean-div-10.txt | 10 |    5   |     1     |    14   | 91.4151 ms |
+| max-mean-div-10.txt | 10 |   10   |     2     |    14   | 221.354 ms |
+| max-mean-div-10.txt | 10 |   15   |     3     |    14   | 203.791 ms |
+| max-mean-div-10.txt | 10 |   20   |     4     |    14   | 192.107 ms |
+| max-mean-div-10.txt | 10 |   25   |     5     |   12.8  |  180.76 ms |
+| max-mean-div-15.txt | 15 |    5   |     1     |   9.5   | 158.746 ms |
+| max-mean-div-15.txt | 15 |   10   |     2     |   9.75  | 616.786 ms |
+| max-mean-div-15.txt | 15 |   15   |     3     |   9.75  | 472.275 ms |
+| max-mean-div-15.txt | 15 |   20   |     4     |   9.75  | 522.093 ms |
+| max-mean-div-15.txt | 15 |   52   |     5     |   9.75  | 600.191 ms |
+| max-mean-div-20.txt | 20 |    5   |     1     | 13.1667 | 632.736 ms |
+| max-mean-div-20.txt | 20 |   10   |     2     | 13.1667 | 981.466 ms |
+| max-mean-div-20.txt | 20 |   15   |     3     | 13.1667 | 1256.86 ms |
+| max-mean-div-20.txt | 20 |   20   |     4     | 13.1667 | 1980.76 ms |
+| max-mean-div-20.txt | 20 |   25   |     5     | 13.1667 | 1379.01 ms |

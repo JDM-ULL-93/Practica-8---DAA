@@ -6,7 +6,7 @@
 
 
 #ifndef VERBOSE
-#define VERBOSE 1
+#define VERBOSE 0
 #endif // !VERBOSE
 
 
@@ -22,7 +22,7 @@ struct Arista {
 public:
 	explicit Arista() {} //Invalido
 	explicit Arista(int idNodo1, int idNodo2, int coste) : idNodo1(idNodo1), idNodo2(idNodo2), coste(coste) {} //Nuevo
-	explicit Arista(const Arista& other) : idNodo1(other.idNodo1), idNodo2(other.idNodo2), coste(other.coste) {}//Copia
+	Arista(const Arista& other) : idNodo1(other.idNodo1), idNodo2(other.idNodo2), coste(other.coste) {}//Copia
 	int idNodo1 = -1;
 	int idNodo2 = -1;
 	int coste = 0;

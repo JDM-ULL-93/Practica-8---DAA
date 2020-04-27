@@ -114,7 +114,7 @@ protected:
 	SolucionMD* agitarEntorno(const Grafo* grafo, const SolucionMD* const entorno);
 public:
 	~BusquedaMDVNS() { this->_entornos->clear(); delete this->_entornos; }
-	explicit BusquedaMDVNS(const Grafo* grafo, const size_t itSinMejora = 50, const size_t maxEntornosSize = 20) :
+	explicit BusquedaMDVNS(const Grafo* grafo, const size_t maxEntornosSize = 20, const size_t itSinMejora = 50) :
 		BusquedaMD(grafo), _itSinMejora(itSinMejora), _maxEntornosSize(maxEntornosSize){}
 	explicit BusquedaMDVNS(const BusquedaMDVNS& other) = delete;
 
