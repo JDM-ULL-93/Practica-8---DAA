@@ -451,7 +451,7 @@ Nuevamente, algoritmo dividido en 3 fases:
 
 ## Algoritmo GRASP
 
-|       Problema      |  N | |LRC| | Ejecución |    md   |     CPU    |
+|       Problema      |  N | \|LRC\| | Ejecución |    md   |     CPU    |
 |:-------------------:|:--:|:-----:|:---------:|:-------:|:----------:|
 | max-mean-div-10.txt | 10 |   2   |     1     | 11.7143 | 118.654 ms |
 | max-mean-div-10.txt | 10 |   4   |     2     |   12.8  | 138.885 ms |
@@ -462,7 +462,7 @@ Nuevamente, algoritmo dividido en 3 fases:
 | max-mean-div-15.txt | 15 |   6   |     2     |   9.5   | 160.036 ms |
 | max-mean-div-15.txt | 15 |   9   |     3     |   9.5   | 154.824 ms |
 | max-mean-div-15.txt | 15 |   12  |     4     |   9.75  | 281.264 ms |
-| max-mean-div-15.txt | 15 |   15  |     5     | 9.33333 | 152.61 ms  |
+| max-mean-div-15.txt | 15 |   15  |     5     | 9.33333 | 152.61  ms |
 | max-mean-div-20.txt | 20 |   4   |     1     | 12.8571 | 253.001 ms |
 | max-mean-div-20.txt | 20 |   8   |     2     |    5    | 205.059 ms |
 | max-mean-div-20.txt | 20 |   12  |     3     | 12.8571 | 244.123 ms |
